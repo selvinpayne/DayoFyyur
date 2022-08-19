@@ -8,6 +8,5 @@ DEBUG = True
 
 # Connect to the database
 
-
 # TODO IMPLEMENT DATABASE URL
 SQLALCHEMY_DATABASE_URI = 'postgresql://dayo:postgres@localhost:5432/myfyyurdb'

@@ -122,14 +122,14 @@ def show_venue(venue_id):
     "upcoming_shows_count": [],
   }
 
-  Past_Shows_Query =db.session.query(Show).join(Venue).filter(Show.venue_id==venue_id).filter(Show.start_time>datetime.NOW()).all()
-  past_shows = Past_Shows_Query
+  past_shows =db.session.query(Show).join(Venue).filter(Show.venue_id==venue_id).filter(Show.start_time>datetime.now()).all()
+  
 
-  Upcoming_Shows_Query = db.session.query(Show).join(Venue).filter(Show.venue_id==venue_id).filter(Show.start_time>datetime.NOW()).al()
-  upcoming_shows = Upcoming_Shows_Query
+  upcoming_shows = db.session.query(Show).join(Venue).filter(Show.venue_id==venue_id).filter(Show.start_time>datetime.now()).all()
+  
 
-  data["upcoming_shows_count"] = Show.query.filter(Show.venue_id==venue_id, Show.start_time<func.NOW()).count()
-  data["past_shows_count"] = Show.query.filter(Show.venue_id==venue_id, Show.start_time<func.NOW()).count()
+  data["upcoming_shows_count"] = Show.query.filter(Show.venue_id==venue_id, Show.start_time<func.now()).count()
+  data["past_shows_count"] = Show.query.filter(Show.venue_id==venue_id, Show.start_time<func.now()).count()
 
 
   return render_template('pages/show_venue.html', venue=VenueInfo)
@@ -235,8 +235,9 @@ def show_artist(artist_id):
   #split the string where there is a comma
   setattr(get_artist, "genres", get_artist.genres.split(","))
   #get the past shows
-  past_shows= db.session.query(Show).join(Artist).filter(Show.artist_id==artist_id).filter(Show.start_time < datetime.now()).all()
   
+  past_shows = db.session.query(Show).join(Artist).filter(Show.artist_id==artist_id).filter(Show.start_time>datetime.now()).all()
+
   list_shows = []
   for show in past_shows:
     temp = {}
@@ -249,7 +250,8 @@ def show_artist(artist_id):
   setattr(get_artist, "past_shows_count", len(list_shows))
 
   #get the upcoming shows
-  upcoming_shows = db.session.query(Show).join(Artist).filter(Show.artist_id==artist_id).filter(Show.start_time > datetime.now()).all()
+  
+  upcoming_shows = db.session.query(Show).join(Artist).filter(Show.artist_id==artist_id).filter(Show.start_time>datetime.now()).all()
 
   list_shows = []
   for show in upcoming_shows:
