@@ -6,6 +6,8 @@ db = SQLAlchemy()
 #----------------------------------------------------------------------------#
 
 
+
+# Missing fields have been updated
 class Artist(db.Model):
     __tablename__ = 'Artist'
 
@@ -17,15 +19,18 @@ class Artist(db.Model):
     genres = db.Column(db.String(120))
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
-
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
     website_link = db.Column(db.String(120))    
     seeking_venue = db.Column(db.Boolean(),nullable=False,default=False)    
     seeking_description = db.Column(db.Text)
     shows = db.relationship('Show', backref="Artist", cascade="all,delete-orphan", lazy=True)
 
 
+
+   
+
+
 class Show(db.Model):
+  __tablename__ = 'Show'
   id = db.Column(db.Integer, primary_key=True)
   artist_id= db.Column(db.Integer(),db.ForeignKey('Artist.id'))
   venue_id = db.Column(db.Integer(),db.ForeignKey('Venue.id'))
@@ -34,6 +39,10 @@ class Show(db.Model):
   venues = db.relationship('Venue', backref="Show")
 
 
+
+
+
+# Missing fields have been updated
 class Venue(db.Model):
 
     __tablename__ = 'Venue'
@@ -46,11 +55,12 @@ class Venue(db.Model):
     phone = db.Column(db.String(120))
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
-
-
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
     genres = db.Column(db.String(120))
     website_link = db.Column(db.String(120))    
     seeking_venue = db.Column(db.Boolean(),nullable=False,default=False)    
     seeking_description = db.Column(db.Text)
     shows = db.relationship('Show', backref="Venue", cascade="all,delete-orphan", lazy=True)
+
+
+
+
